@@ -1,0 +1,113 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'com.github.johnrengelman.shadow' version libs.versions.shadow
+    id 'io.freefair.lombok' version libs.versions.delombok
+}
+
+group = 'it.fulminazzo'
+version = '1.0'
+
+allprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+    apply plugin: 'com.github.johnrengelman.shadow'
+    apply plugin: 'io.freefair.lombok'
+
+    group = "${rootProject.group}"
+    version = "${rootProject.version}"
+
+    repositories {
+        mavenCentral()
+        maven{ url = 'https://repo.fulminazzo.it/releases' }
+        maven{ url = 'https://raw.github.com/agrison/jtoml/mvn-repo/' }
+    }
+
+    dependencies {
+        // Lombok
+        compileOnly libs.lombok
+        annotationProcessor libs.lombok
+        testCompileOnly libs.lombok
+        testAnnotationProcessor libs.lombok
+
+        // JetBrains Annotations
+        compileOnly libs.annotations
+        testCompileOnly libs.annotations
+
+        // JUnit
+        testImplementation platform(libs.junit.platform)
+        testImplementation 'org.junit.jupiter:junit-jupiter'
+        testImplementation 'org.junit.jupiter:junit-jupiter-params'
+
+        // Common dependencies
+        if (project.name != "common" && project.name != "test") {
+            api project(":common")
+            testImplementation project(":test")
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    this.ext.getFileName = { name ->
+        if (name == null) throw new RuntimeException("getFileName(): Name cannot be null!")
+        String fileName = name
+        final String projectName = rootProject.name
+        if (projectName != fileName) fileName = "${projectName}-" + fileName
+        return fileName + "-${rootProject.version}"
+    }
+
+    shadowJar {
+        exclude("META-INF/**") // Removes all Maven META-INF/ files.
+        exclude("FileConfigurationStaticMethods.class")
+        archiveFileName = "${getFileName(project.name)}.jar"
+
+        manifest {
+            attributes ("Manifest-Version": "${project.version}")
+        }
+    }
+
+    jar {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        archiveFileName = "${getFileName(project.name)}-original.jar"
+        dependsOn(shadowJar)
+        manifest {
+            attributes ("Manifest-Version": "${project.version}")
+        }
+    }
+
+    tasks.register('sourcesJar', Jar) {
+        from sourceSets.main.delombokTask
+        archiveClassifier = 'sources'
+    }
+
+    tasks.register('javadocJar', Jar) {
+        from javadoc
+        archiveClassifier = 'javadoc'
+    }
+
+    if ("${project.name}" != "common")
+        publishing {
+            publications {
+                maven(MavenPublication) {
+                    String projectName = "${project.name}"
+                    String rootProjectName = "${rootProject.name}"
+                    groupId = "${rootProject.group}" + (projectName == rootProjectName ? "" : ".${rootProjectName}")
+                    artifactId = "${project.name}"
+                    version = "${rootProject.version}"
+
+                    from components.java
+                    artifact sourcesJar
+                    artifact javadocJar
+                }
+            }
+        }
+}
+
+dependencies {
+    subprojects.each {
+        if (it.name != "test")
+            implementation(project(it.path))
+    }
+}
