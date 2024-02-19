@@ -40,3 +40,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+common/src/main/java/it/fulminazzo/yamlparser/configuration/FileConfiguration.java
