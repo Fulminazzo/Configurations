@@ -1,0 +1,4 @@
+dependencies {
+    api libs.yamlparser
+    api libs.snakeyaml
+}
