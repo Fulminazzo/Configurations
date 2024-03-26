@@ -2,3 +2,11 @@ dependencies {
     api libs.yamlparser
     api libs.snakeyaml
 }
+
+tasks.register("updateFileConfiguration") {
+    FileConfigurationLoader.loadFileConfiguration()
+}
+
+jar {
+    dependsOn(updateFileConfiguration)
+}
