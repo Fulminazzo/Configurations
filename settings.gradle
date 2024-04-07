@@ -1,2 +1,3 @@
 rootProject.name = 'Configurations'
 include 'common'
+include 'test'

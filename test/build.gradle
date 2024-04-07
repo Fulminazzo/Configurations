@@ -1,0 +1,7 @@
+dependencies {
+    api project(':common')
+
+    compileOnly platform(libs.junit.platform)
+    compileOnly 'org.junit.jupiter:junit-jupiter'
+    compileOnly 'org.junit.jupiter:junit-jupiter-params'
+}
