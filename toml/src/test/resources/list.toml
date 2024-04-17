@@ -1,0 +1,11 @@
+[[repositories]]
+id = "spigotmc-repo"
+url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+
+[[repositories]]
+id = "sonatype"
+url = "https://oss.sonatype.org/content/groups/public/"
+
+[[repositories]]
+id = "paper-repo"
+url = "https://repo.papermc.io/repository/maven-public/"
