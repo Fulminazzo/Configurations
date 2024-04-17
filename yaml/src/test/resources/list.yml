@@ -1,0 +1,7 @@
+repositories:
+  - id: spigotmc-repo
+    url: https://hub.spigotmc.org/nexus/content/repositories/snapshots/
+  - id: sonatype
+    url: https://oss.sonatype.org/content/groups/public/
+  - id: paper-repo
+    url: https://repo.papermc.io/repository/maven-public/
