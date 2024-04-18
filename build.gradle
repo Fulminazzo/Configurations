@@ -8,6 +8,8 @@ plugins {
 group = 'it.fulminazzo'
 version = '1.0'
 
+def TEST_MODULE = 'test'
+
 allprojects {
     apply plugin: 'java-library'
     apply plugin: 'maven-publish'
@@ -40,9 +42,9 @@ allprojects {
         testImplementation 'org.junit.jupiter:junit-jupiter-params'
 
         // Common dependencies
-        if (project.name != "common" && project.name != "test") {
-            api project(":common")
-            testImplementation project(":test")
+        if (project.name != 'common' && project.name != TEST_MODULE) {
+            api project(':common')
+            testImplementation project(":${TEST_MODULE}")
         }
     }
 
@@ -51,26 +53,26 @@ allprojects {
     }
 
     this.ext.getFileName = { name ->
-        if (name == null) throw new RuntimeException("getFileName(): Name cannot be null!")
+        if (name == null) throw new RuntimeException('getFileName(): Name cannot be null!')
         String fileName = name
         final String projectName = rootProject.name
-        if (projectName != fileName) fileName = "${projectName}-" + fileName
-        return fileName + "-${rootProject.version}"
+        if (projectName != fileName) fileName = "${projectName}-${fileName}"
+        return "${fileName}-${rootProject.version}"
     }
 
     shadowJar {
-        exclude("META-INF/**") // Removes all Maven META-INF/ files.
-        exclude("FileConfigurationStaticMethods.class")
+        exclude('META-INF/**') // Removes all Maven META-INF/ files.
+        exclude('FileConfigurationStaticMethods.class')
         archiveFileName = "${getFileName(project.name)}.jar"
 
         manifest {
-            attributes ("Manifest-Version": "${project.version}")
+            attributes ('Manifest-Version': "${project.version}")
         }
     }
 
     jar {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-        archiveFileName = "${getFileName(project.name)}-original.jar"
+        archiveFileName = '${getFileName(project.name)}-original.jar'
         dependsOn(shadowJar)
         manifest {
             attributes ("Manifest-Version": "${project.version}")
@@ -87,7 +89,7 @@ allprojects {
         archiveClassifier = 'javadoc'
     }
 
-    if ("${project.name}" != "test")
+    if ("${project.name}" != "${TEST_MODULE}")
         publishing {
             publications {
                 maven(MavenPublication) {
@@ -106,8 +108,5 @@ allprojects {
 }
 
 dependencies {
-    subprojects.each {
-        if (it.name != "test")
-            implementation(project(it.path))
-    }
+    subprojects.findAll { it.name != "${TEST_MODULE}" }.each { implementation(project(it.path)) }
 }
