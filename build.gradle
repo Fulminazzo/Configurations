@@ -104,6 +104,19 @@ allprojects {
                     artifact javadocJar
                 }
             }
+
+            repositories {
+                maven {
+                    url 'https://repo.fulminazzo.it/releases'
+                    credentials {
+                        username = System.getenv('REPO_USERNAME')
+                        password = System.getenv('REPO_PASSWORD')
+                    }
+                    authentication {
+                        basic(BasicAuthentication)
+                    }
+                }
+            }
         }
 }
 
