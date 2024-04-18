@@ -11,20 +11,44 @@ import java.io.InputStream;
 import java.io.Writer;
 import java.util.Map;
 
+/**
+ * An implementation of {@link FileConfiguration} to support TOML files.
+ */
 class TOMLConfiguration extends FileConfiguration {
-    
+
+    /**
+     * Instantiates a new Toml configuration.
+     *
+     * @param path the path
+     */
     public TOMLConfiguration(@NotNull String path) {
         super(path);
     }
 
+    /**
+     * Instantiates a new Toml configuration.
+     *
+     * @param file the file
+     */
     public TOMLConfiguration(@NotNull File file) {
         super(file);
     }
 
+    /**
+     * Instantiates a new Toml configuration.
+     *
+     * @param inputStream the input stream
+     */
     public TOMLConfiguration(InputStream inputStream) {
         super(inputStream);
     }
 
+    /**
+     * Instantiates a new Toml configuration.
+     *
+     * @param file        the file
+     * @param inputStream the input stream
+     */
     public TOMLConfiguration(@Nullable File file, InputStream inputStream) {
         super(file, inputStream);
     }
