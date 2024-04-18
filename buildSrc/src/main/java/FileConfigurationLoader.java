@@ -114,6 +114,20 @@ public class FileConfigurationLoader {
         System.out.println("Finished download");
     }
 
+    /**
+     * Deletes the downloaded FileConfiguration, if present.
+     *
+     * @throws IOException the io exception
+     */
+    public static void unloadFileConfiguration() throws IOException {
+        final File outputFile = new File(getParentFile(), FILE_PATH);
+        if (outputFile.exists()) FileUtils.deleteFile(outputFile);
+        File dir = outputFile;
+        File[] files;
+        while ((dir = dir.getParentFile()).isDirectory() && (files = dir.listFiles()) != null && files.length == 0)
+            if (dir.exists()) FileUtils.deleteFolder(dir);
+    }
+
     private static String readFileContentWeb(final String link) {
         try {
             final URL url = new URL(link);
