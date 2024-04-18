@@ -79,17 +79,12 @@ allprojects {
         }
     }
 
-    tasks.register('sourcesJar', Jar) {
-        from sourceSets.main.delombokTask
-        archiveClassifier = 'sources'
-    }
+    if ("${project.name}" != "${TEST_MODULE}") {
+        tasks.register('sourcesJar', Jar) {
+            from sourceSets.main.delombokTask
+            archiveClassifier = 'sources'
+        }
 
-    tasks.register('javadocJar', Jar) {
-        from javadoc
-        archiveClassifier = 'javadoc'
-    }
-
-    if ("${project.name}" != "${TEST_MODULE}")
         publishing {
             publications {
                 maven(MavenPublication) {
@@ -101,7 +96,6 @@ allprojects {
 
                     from components.java
                     artifact sourcesJar
-                    artifact javadocJar
                 }
             }
 
@@ -118,6 +112,7 @@ allprojects {
                 }
             }
         }
+    }
 }
 
 dependencies {
