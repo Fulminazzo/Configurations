@@ -51,7 +51,7 @@ public class FileConfigurationLoader {
             if (!r.contains("FileConfiguration;"))
                 if (r.contains("FileConfigurationStaticMethods")) reachedClass = true;
                 else if (reachedClass) STATIC_METHODS += r;
-                else STATIC_IMPORTS += r;
+                else if (!r.matches("^ */?\\*+.*\n")) STATIC_IMPORTS += r;
         }
     }
 
