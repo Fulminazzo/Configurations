@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'it.fulminazzo'
-version = '1.0'
+version = libs.versions.yamlparser.get()
 
 def TEST_MODULE = 'test'
 
@@ -72,7 +72,7 @@ allprojects {
 
     jar {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-        archiveFileName = '${getFileName(project.name)}-original.jar'
+        archiveFileName = "${getFileName(project.name)}-original.jar"
         dependsOn(shadowJar)
         manifest {
             attributes ("Manifest-Version": "${project.version}")
