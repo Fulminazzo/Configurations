@@ -4,9 +4,17 @@ dependencies {
 }
 
 tasks.register("updateFileConfiguration") {
-    FileConfigurationLoader.loadFileConfiguration()
+    shouldRunAfter {
+        FileConfigurationLoader.loadFileConfiguration()
+    }
 }
 
 jar {
     dependsOn(updateFileConfiguration)
+}
+
+clean {
+    shouldRunAfter {
+        FileConfigurationLoader.unloadFileConfiguration()
+    }
 }
