@@ -9,6 +9,10 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * A helper to download the default <code>FileConfiguration</code> class from
+ * the default YAMLParser project.
+ */
 public class FileConfigurationLoader {
     private static final String STATIC_DEFAULT_METHODS = "/**\n" +
             "     * Load to map.\n" +
@@ -69,6 +73,11 @@ public class FileConfigurationLoader {
         } else throw new RuntimeException(String.format("Could not find any string matching the regex \"%s\" in content", regex));
     }
 
+    /**
+     * Loads the default FileConfiguration.
+     *
+     * @throws IOException the io exception
+     */
     public static void loadFileConfiguration() throws IOException {
         final File outputFile = new File(getParentFile(), FILE_PATH);
         if (outputFile.exists()) FileUtils.deleteFile(outputFile);
