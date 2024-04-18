@@ -1,0 +1,36 @@
+# Name of the action
+name: Automatic Release
+
+# Event to run on
+on:
+  # Will run on every push in the "main" branch
+  push:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: write
+
+# Jobs that will execute
+jobs:
+  release:
+    name: Setup Environment, Build JAR and Release Project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Automatic Release
+        uses: Fulminazzo/java-automatic-release@v1
+        with:
+          java-version: 8
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY_NAME: ${{ github.event.repository.name }}
+          # Message specified in the commit
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+      - name: Publish Release
+        uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
+        with:
+          arguments: publish
+        env:
+          REPO_USERNAME: ${{ secrets.FULMINAZZO_REPO_USERNAME }}
+          REPO_PASSWORD: ${{ secrets.FULMINAZZO_REPO_TOKEN }}
