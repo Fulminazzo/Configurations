@@ -34,3 +34,4 @@ jobs:
         env:
           REPO_USERNAME: ${{ secrets.FULMINAZZO_REPO_USERNAME }}
           REPO_PASSWORD: ${{ secrets.FULMINAZZO_REPO_TOKEN }}
+
