@@ -4,6 +4,8 @@ which supports many new data formats.
 As of right now, the supported formats are:
 - `YAML`
 - `JSON`
+- `XML`
+- `TOML`
 
 Each one of them can be retrieved singularly using its name, or by loading the whole project to retrieve all of them simultaneously.
 
