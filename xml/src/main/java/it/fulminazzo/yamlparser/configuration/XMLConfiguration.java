@@ -21,7 +21,7 @@ import java.util.*;
  */
 @SuppressWarnings("unchecked")
 @Getter
-public class XMLConfiguration extends FileConfiguration implements INodeObject {
+class XMLConfiguration extends FileConfiguration implements INodeObject {
     /**
      * This value will be used when saving lists.
      * Since XML cannot accept tags of the format &lt;\d+&gt;, this will be prepended to the tag name.

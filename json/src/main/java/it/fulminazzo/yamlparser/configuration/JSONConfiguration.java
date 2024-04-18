@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * An implementation of {@link FileConfiguration} to support JSON files.
  */
-public class JSONConfiguration extends FileConfiguration {
+class JSONConfiguration extends FileConfiguration {
 
     /**
      * Instantiates a new Json configuration.

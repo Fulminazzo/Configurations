@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * An implementation of {@link FileConfiguration} to support YAML files.
  */
-public class YAMLConfiguration extends FileConfiguration {
+class YAMLConfiguration extends FileConfiguration {
 
     /**
      * Instantiates a new Yaml configuration.

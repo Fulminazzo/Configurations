@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.io.Writer;
 import java.util.Map;
 
-public class TOMLConfiguration extends FileConfiguration {
+class TOMLConfiguration extends FileConfiguration {
     
     public TOMLConfiguration(@NotNull String path) {
         super(path);
