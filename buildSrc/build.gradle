@@ -11,10 +11,11 @@ repositories {
 }
 
 dependencies {
-    implementation 'it.fulminazzo:YAMLParser:1.5.6'
+    implementation libs.yamlparser
 
-    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation platform(libs.junit.platform)
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params'
 }
 
 test {
