@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public abstract class AFileConfigurationTest {
+abstract class AFileConfigurationTest {
     protected final String filePath;
     protected final String fileExtension;
     protected FileConfiguration configuration;
