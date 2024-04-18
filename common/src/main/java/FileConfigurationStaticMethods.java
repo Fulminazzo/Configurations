@@ -11,6 +11,10 @@ import java.io.InputStream;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
+/**
+ * An utility class with methods imported by {@link FileConfiguration}.
+ * Should not be used.
+ */
 class FileConfigurationStaticMethods {
 
     /**
@@ -19,7 +23,7 @@ class FileConfigurationStaticMethods {
      * @param rawData the raw data
      * @return the file configuration
      */
-    public static FileConfiguration newConfiguration(final @NotNull String rawData) {
+    public static @NotNull FileConfiguration newConfiguration(final @NotNull String rawData) {
         return newConfiguration(new ByteArrayInputStream(rawData.getBytes()));
     }
 
@@ -29,7 +33,7 @@ class FileConfigurationStaticMethods {
      * @param file the file
      * @return the file configuration
      */
-    public static FileConfiguration newConfiguration(final @Nullable File file) {
+    public static @NotNull FileConfiguration newConfiguration(final @Nullable File file) {
         return instantiateNewConfiguration(file);
     }
 
@@ -39,11 +43,11 @@ class FileConfigurationStaticMethods {
      * @param stream the stream
      * @return the file configuration
      */
-    public static FileConfiguration newConfiguration(final @Nullable InputStream stream) {
+    public static @NotNull FileConfiguration newConfiguration(final @Nullable InputStream stream) {
         return instantiateNewConfiguration(stream);
     }
 
-    private static FileConfiguration instantiateNewConfiguration(final Object @Nullable ... parameters) {
+    private static @NotNull FileConfiguration instantiateNewConfiguration(final Object @Nullable ... parameters) {
         Set<Class<? extends FileConfiguration>> classes = getConfigurationClasses();
         List<Exception> exceptions = new ArrayList<>();
         for (final Class<? extends FileConfiguration> clazz : classes)
